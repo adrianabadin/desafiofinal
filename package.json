@@ -6,7 +6,8 @@
   "scripts": {
     "tsc": "tsc",
     "dev": "ts-node-dev src/index.ts",
-    "build": "tsc index.js"
+    "build": "tsc index.js",
+    "try": "ts-node-dev src/services/validation.ts"
   },
   "keywords": [],
   "author": "Adrian Abadin",
