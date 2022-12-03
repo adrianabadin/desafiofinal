@@ -3,6 +3,7 @@ import { Version, Item, dataStream } from '../types'
 
 import fs from 'fs'
 const TIMEOUT = 3000
+
 export class ItemClass {
   public id: number
   public timeStamp: number
@@ -31,6 +32,17 @@ export class ItemClass {
     this.stock = stock
   }
 }
+
+export class CartClass {
+  public id: number
+  public timeStamp: number
+  public products: ItemClass[]
+  constructor (id: number, timeStamp: number, cartProducts: Item[]) {
+    this.id = id
+    this.timeStamp = timeStamp
+    this.products = cartProducts
+  }
+}
 class VersionClass {
   public timeStamp: number
   public blocked: boolean
@@ -55,13 +67,11 @@ export class JsonDbManager {
     let version: Version
     // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
     if (fs.existsSync(`${this.file}.version`)) {
-      console.log('Existe')
       version = await JSON.parse(
         await fs.promises.readFile(`${this.file}.version`, 'utf-8')
       )
       console.log(version)
     } else {
-      console.log('No existe')
       version = new VersionClass(Date.now(), false, 0)
       await fs.promises.writeFile(
         `${this.file}.version`,
@@ -92,7 +102,6 @@ export class JsonDbManager {
 
   async readData (): Promise<Item[]> {
     if (!(await this.versionCompare())) {
-      console.log('verison compare false')
       // eslint-disable-next-line no-extra-boolean-cast
       if (Boolean(fs.existsSync(`${this.file}.JSONE`))) {
         this.data = await JSON.parse(
@@ -125,7 +134,7 @@ export class JsonDbManager {
 
   largestId (): number {
     let id
-    if ((Boolean(fs.existsSync(`${this.file}.JSONE`))) && this.data.length > 0) {
+    if (Boolean(fs.existsSync(`${this.file}.JSONE`)) && this.data.length > 0) {
       id = Math.max(...this.data.map((item) => item.id)) + 1
     } else id = 0
     return id
@@ -146,10 +155,10 @@ export class JsonDbManager {
     await this.updateVersion(false)
   }
 
-  async addItem (item: Item): Promise<dataStream> {
+  async addItem (item: any): Promise<dataStream> {
     await this.readData()
     let response: dataStream
-    const itemUpdated: Item = { ...item, id: this.largestId() }
+    const itemUpdated: any = { ...item, id: this.largestId() }
     this.data.push(itemUpdated)
     try {
       if (this.data.length > 1) {
@@ -216,7 +225,6 @@ export class JsonDbManager {
   async deleteById (id: number): Promise<dataStream> {
     await this.readData()
     const item = this.data.find((dataItem) => dataItem.id === id)
-    console.log('id: ', id, 'Item: ', item)
     if (item != null) {
       this.data = this.data.filter((item) => item.id !== id)
       await this.saveFile()
@@ -238,12 +246,9 @@ export class JsonDbManager {
     }
   }
 
-  async updateById (item: Item): Promise<dataStream> {
+  async updateById (item: any, id: number): Promise<dataStream> {
     await this.readData()
-    const dataIndex = this.data.findIndex(
-      (dataItem) => dataItem.id === item.id
-    )
-    console.log(dataIndex, 'resultado')
+    const dataIndex = this.data.findIndex((dataItem) => dataItem.id === id)
     if (dataIndex !== -1) {
       this.data[dataIndex] = item
       await this.saveFile()
@@ -266,4 +271,4 @@ export class JsonDbManager {
   }
 }
 
-module.exports = { JsonDbManager, ItemClass }
+module.exports = { JsonDbManager, ItemClass, CartClass }

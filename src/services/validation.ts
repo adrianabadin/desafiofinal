@@ -49,13 +49,13 @@ export class ValidatorWare {
 }
 
 function authValidation (status: boolean): any {
-  const authVal = (_req: Request, res: Response, next: NextFunction): any => {
+  const authVal = (req: Request, res: Response, next: NextFunction): any => {
     if (status) next()
     else {
       res.status(401).send({
         data: [],
         ok: false,
-        err: 'Auth required, login as admin to use this route',
+        err: `${req.path} x método ${req.method} no autorizada`,
         status: 401,
         textStatus: ''
       })

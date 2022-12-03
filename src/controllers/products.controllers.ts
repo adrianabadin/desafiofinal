@@ -23,7 +23,17 @@ export function productControllers (): any {
     )
     res.status(responseAnalizer(data).status).send(responseAnalizer(data).data)
   }
-  //   const getItems = (req: Request, res: Response): any => {}
+  const getItems = async (req: Request, res: Response): Promise<any> => {
+    let data: dataStream
+    console.log(req.params.id, 'params')
+    if (req.params.id !== undefined) {
+      data = await productDbManager.getById(parseInt(req.params.id))
+    } else {
+      data = await productDbManager.getAll()
+    }
+
+    res.status(responseAnalizer(data).status).send(responseAnalizer(data).data)
+  }
   const updateItem = async (req: Request, res: Response): Promise<any> => {
     const uploadedImage = `./images/${req.file?.filename}`
     const data: dataStream = await productDbManager.updateById(
@@ -35,7 +45,7 @@ export function productControllers (): any {
         uploadedImage,
         req.body.price,
         req.body.stock
-      )
+      ), parseInt(req.params.id)
     )
     res.status(responseAnalizer(data).status).send(responseAnalizer(data).data)
   }
@@ -50,7 +60,7 @@ export function productControllers (): any {
       return { status: data.status, data: data.data }
     } else return { status: data.status, data: data.err }
   }
-  return { postItem, updateItem, deleteItem }
+  return { postItem, updateItem, deleteItem, getItems }
 }
 
 module.exports = productControllers
