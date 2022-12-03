@@ -6,7 +6,7 @@
   "scripts": {
     "tsc": "tsc",
     "dev": "ts-node-dev src/index.ts",
-    "build": "tsc index.js",
+    "build": "tsc --build",
     "try": "ts-node-dev src/services/validation.ts",
     "lint": "ts-standard"
   },
