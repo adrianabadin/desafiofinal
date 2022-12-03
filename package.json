@@ -7,7 +7,8 @@
     "tsc": "tsc",
     "dev": "ts-node-dev src/index.ts",
     "build": "tsc index.js",
-    "try": "ts-node-dev src/services/validation.ts"
+    "try": "ts-node-dev src/services/validation.ts",
+    "lint": "ts-standard"
   },
   "keywords": [],
   "author": "Adrian Abadin",
@@ -22,6 +23,13 @@
   "devDependencies": {
     "@types/express": "^4.17.14",
     "@types/multer": "^1.4.7",
-    "typescript": "^4.9.3"
+    "ts-standard": "^12.0.1",
+    ",typescript": "^4.9.3"
+  },
+  "eslintConfig": {
+    "parserOptions": {
+      "project": "./tsconfig.json"
+    },
+    "extends":["./node_modules/ts-standard/eslintrc.json"]
   }
 }
