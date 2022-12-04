@@ -14,7 +14,7 @@ const dbService_1 = require("../services/dbService");
 // import { dataStream, Item } from '../types'
 // const ItemClass = require('../services/dbService').ItemClass
 const Product = require('../services/dbService').JsonDbManager;
-const cartDbManager = new Product('./src/databases/cart');
+const cartDbManager = new Product('./databases/cart');
 function CartControllers() {
     const createCart = (_req, res) => __awaiter(this, void 0, void 0, function* () {
         try {

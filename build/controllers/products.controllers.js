@@ -12,7 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.productControllers = void 0;
 const ItemClass = require('../services/dbService').ItemClass;
 const Product = require('../services/dbService').JsonDbManager;
-const productDbManager = new Product('./src/databases/product');
+const productDbManager = new Product('./databases/product');
 function productControllers() {
     const postItem = (req, res) => __awaiter(this, void 0, void 0, function* () {
         var _a;
@@ -52,4 +52,6 @@ function productControllers() {
     return { postItem, updateItem, deleteItem, getItems };
 }
 exports.productControllers = productControllers;
-module.exports = productControllers;
+const productController = productControllers();
+exports.default = productController;
+// module.exports = productControllers

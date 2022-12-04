@@ -15,3 +15,4 @@ exports.cartRoutes.post('/', cartController.createCart);
 exports.cartRoutes.post('/:id/products', cartController.addProduct);
 exports.cartRoutes.delete('/:id', cartController.deleteCart);
 exports.cartRoutes.delete('/:id/products/:id_prod', cartController.deleteProduct);
+exports.default = exports.cartRoutes;

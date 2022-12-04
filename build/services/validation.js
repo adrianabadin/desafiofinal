@@ -1,6 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ValidatorWare = void 0;
 class ValidatorWare {
     constructor(selectedObject) {
         this.PRODUCTS = {
@@ -51,7 +50,6 @@ class ValidatorWare {
         this.selectedOnject = selectedObject;
     }
 }
-exports.ValidatorWare = ValidatorWare;
 function authValidation(status) {
     const authVal = (req, res, next) => {
         if (status)
@@ -60,7 +58,7 @@ function authValidation(status) {
             res.status(401).send({
                 data: [],
                 ok: false,
-                err: `${req.path} x método ${req.method} no autorizada`,
+                err: `${req.path} x método  no autorizada`,
                 status: 401,
                 textStatus: ''
             });
