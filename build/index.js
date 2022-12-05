@@ -17,6 +17,9 @@ const PORT = process.env.PORT || 8080;
 const app = (0, express_1.default)();
 app.use('/api/products', products_1.default);
 app.use('/api/cart', cart_1.default);
+app.use((req, res) => {
+    res.status(404).send(`The route ${req.path} in the method ${req.method} is not yet implemented`);
+});
 app.use(express_1.default.json());
 app.use(express_1.default.static('./src/public'));
 app.get('/', (_req, res) => {

@@ -58,7 +58,7 @@ function authValidation(status) {
             res.status(401).send({
                 data: [],
                 ok: false,
-                err: `${req.path} x método  no autorizada`,
+                err: `${req.path} x método ${req.method} no autorizada`,
                 status: 401,
                 textStatus: ''
             });

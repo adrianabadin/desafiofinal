@@ -17,7 +17,7 @@ const products = (0, express_1.Router)();
 products.get('/', products_controllers_1.default.getItems);
 products.get('/:id', products_controllers_1.default.getItems);
 const validationWare = new ValidatorWare.ValidatorWare('PRODUCTS');
-const authVerification = ValidatorWare.authValidation(true);
+const authVerification = ValidatorWare.authValidation(false);
 products.post('/', authVerification.authVal, configurations_1.default.single('image'), validationWare.validation, products_controllers_1.default.postItem);
 products.put('/:id', authVerification.authVal, configurations_1.default.single('image'), validationWare.validation, products_controllers_1.default.updateItem);
 products.delete('/:id', authVerification.authVal, products_controllers_1.default.deleteItem);
