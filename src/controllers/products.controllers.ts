@@ -4,7 +4,7 @@ import { Request, Response } from 'express'
 import { dataStream, Item } from '../types'
 const ItemClass = require('../services/dbService').ItemClass
 const Product = require('../services/dbService').JsonDbManager
-const productDbManager = new Product('./src/databases/product')
+const productDbManager = new Product('./databases/product')
 
 export function productControllers (): any {
   const postItem = async (req: Request, res: Response): Promise<any> => {
@@ -62,5 +62,6 @@ export function productControllers (): any {
   }
   return { postItem, updateItem, deleteItem, getItems }
 }
-
-module.exports = productControllers
+const productController = productControllers()
+export default productController
+// module.exports = productControllers

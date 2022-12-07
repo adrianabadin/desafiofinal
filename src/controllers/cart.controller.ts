@@ -7,7 +7,7 @@ import { dataStream, Item } from '../types'
 // import { dataStream, Item } from '../types'
 // const ItemClass = require('../services/dbService').ItemClass
 const Product = require('../services/dbService').JsonDbManager
-const cartDbManager = new Product('./src/databases/cart')
+const cartDbManager = new Product('./databases/cart')
 
 export function CartControllers (): any {
   const createCart = async (_req: Request, res: Response): Promise<any> => {
@@ -18,14 +18,15 @@ export function CartControllers (): any {
   }
 
   const addProduct = async (req: Request, res: Response): Promise <any> => {
+    console.log('addproduct', req.body)
     try {
       const data: Item = req.body
       const id = parseInt(req.params.id)
       const transitionObject: dataStream = await cartDbManager.getById(id)
       const cleanObject: any = transitionObject.data
-
+      console.log(transitionObject, id, 'DATA:', data)
       cleanObject[0].products.push(new ItemClass(data.id, data.name, data.description, data.code, data.image, data.price, data.stock))
-
+      console.log(cleanObject[0])
       const response = await cartDbManager.updateById(cleanObject[0], parseInt(req.params.id))
       res.status(response.status).send(response.data)
     } catch (e) { res.status(400).send({ err: 'Unable to add item to the cart ' }) }

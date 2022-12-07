@@ -1,6 +1,6 @@
 import { Item, ValidationObject, SelectionObject } from '../types'
 import { Response, NextFunction, Request } from 'express'
-export class ValidatorWare {
+class ValidatorWare {
   private readonly selectedOnject: SelectionObject
   private readonly PRODUCTS: ValidationObject = {
     name: /[a-zA-Z0-9]{3,}/g,

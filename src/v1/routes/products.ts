@@ -1,12 +1,15 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 /* eslint-disable @typescript-eslint/no-misused-promises */
+import upload from '../../configurations/configurations'
+// const upload = require('../../configurations/configurations')
 import { Router } from 'express'
-import { upload } from '../../configurations/configurations'
-const productControllers = require('../../controllers/products.controllers')
+// const Router = require('express').Router()
+import productController from '../../controllers/products.controllers'
+// const productControllers = require('../../controllers/products.controllers')
+
 const ValidatorWare = require('../../services/validation')
-const productController = productControllers()
-export const products = Router()
+const products = Router()
 products.get('/', productController.getItems)
 products.get('/:id', productController.getItems)
 const validationWare = new ValidatorWare.ValidatorWare('PRODUCTS')
@@ -26,3 +29,5 @@ products.put(
   productController.updateItem
 )
 products.delete('/:id', authVerification.authVal, productController.deleteItem)
+
+export default products
